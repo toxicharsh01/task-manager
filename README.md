@@ -1,7 +1,7 @@
 # Task Manager App
 
 A simple **Task Manager App** built using the MERN stack.
-Currently, the project is in progress and the backend is partially implemented.
+The backend is now functional with basic task CRUD operations and authentication.
 
 ---
 
@@ -9,8 +9,9 @@ Currently, the project is in progress and the backend is partially implemented.
 
 * User **signup** and **login**
 * Password hashing using **bcrypt**
-* Basic **JWT-based authentication**
-* Initial setup for task management APIs
+* **JWT-based authentication** for secure routes
+* **Task CRUD operations**: create, read, update, delete tasks
+* All routes are protected using authentication middleware
 
 ---
 
@@ -26,5 +27,6 @@ Currently, the project is in progress and the backend is partially implemented.
 
 ## Project Status
 
-🚧 Project is under development
-More features and improvements will be added soon.
+✅ Backend functional with core features
+🚧 Frontend and additional features are under development
+More improvements and enhancements will be added soon.
