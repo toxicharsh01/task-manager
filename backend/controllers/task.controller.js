@@ -2,13 +2,13 @@ const Task = require("../models/task.model");
 
 // Create a new task
 const createTask = async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, priority, dueDate } = req.body; // added new fields
   const user = req.user;
 
   // Validate required fields
   if (!title || !description) {
     return res
-      .status(400) // 201 was wrong for validation error
+      .status(400)
       .json({ success: false, message: "All fields are required" });
   }
 
@@ -24,17 +24,17 @@ const createTask = async (req, res) => {
     const newTask = new Task({
       title,
       description,
+      priority, // added
+      dueDate, // added
       user: user._id,
     });
 
     await newTask.save();
-    return res
-      .status(201)
-      .json({
-        success: true,
-        message: "Task added successfully",
-        data: newTask,
-      });
+    return res.status(201).json({
+      success: true,
+      message: "Task added successfully",
+      data: newTask,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
@@ -43,10 +43,32 @@ const createTask = async (req, res) => {
 
 // Get all tasks for logged-in user
 const getTasks = async (req, res) => {
-  const user = req.user;
-  const tasks = await Task.find({ user: user._id });
+  try {
+    const { search, priority, completed } = req.query;
+    let query = { user: req.user._id };
 
-  return res.status(200).json({ success: true, data: tasks });
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
+    if (priority) {
+      query.priority = priority;
+    }
+
+    if (completed === "true" || completed === "false") {
+      query.completed = completed === "true"; // convert string to bool
+    }
+
+    const tasks = await Task.find(query).sort({ dueDate: 1 });
+
+    return res.status(200).json({
+      success: true,
+      count: tasks.length,
+      data: tasks,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
 // Get single task by ID
@@ -64,7 +86,7 @@ const getTask = async (req, res) => {
 
 // Update task
 const updateTask = async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, priority, dueDate, completed } = req.body;
   const task = await Task.findById(req.params.id);
 
   if (!task) {
@@ -86,11 +108,18 @@ const updateTask = async (req, res) => {
     }
   }
 
-  task.title = title || task.title;
-  task.description = description || task.description;
-
-  const updatedTask = await task.save();
-
+  // Update fields if provided
+  const updatedTask = await Task.findByIdAndUpdate(
+    req.params.id,
+    {
+      ...(title !== undefined && { title }),
+      ...(description !== undefined && { description }),
+      ...(priority !== undefined && { priority }),
+      ...(dueDate !== undefined && { dueDate }),
+      ...(completed !== undefined && { completed }),
+    },
+    { new: true },
+  );
   return res.status(200).json({
     success: true,
     message: "Task updated successfully",
@@ -100,19 +129,22 @@ const updateTask = async (req, res) => {
 
 // Delete task
 const deleteTask = async (req, res) => {
-  const task = await Task.findById(req.params.id);
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
 
-  if (!task) {
-    return res.status(404).json({ success: false, message: "Task not found" });
+    if (!task) {
+      return res.status(404).json({ success: false, message: "Task not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Task deleted successfully",
+      data: task,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Server Error" });
   }
-
-  await task.remove();
-
-  return res.status(200).json({
-    success: true,
-    message: "Task deleted successfully",
-    data: task,
-  });
 };
 
 module.exports = { createTask, getTasks, getTask, updateTask, deleteTask };
