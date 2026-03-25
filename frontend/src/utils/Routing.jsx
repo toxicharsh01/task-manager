@@ -4,6 +4,7 @@ import Signup from "../components/Signup";
 import Login from "../components/Login";
 import Dashboard from "../components/Dashboard";
 import ProtectedRoutes from "../context/ProtectedRoutes";
+import PageNotFound from "./PageNotFound";
 
 function Routing() {
   return (
@@ -19,6 +20,7 @@ function Routing() {
           </ProtectedRoutes>
         }
       />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

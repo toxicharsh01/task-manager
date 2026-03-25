@@ -1,0 +1,162 @@
+/* Main container */
+.dashboardContainer {
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  padding: 20px;
+}
+
+/* Top bar */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Heading */
+.topBar h1 {
+  margin: 0;
+}
+
+/* Logout button */
+.logoutBtn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #c82333;
+}
+
+/* Section titles */
+.sectionTitle {
+  margin: 20px 0 10px;
+  color: #333;
+}
+
+/* Form */
+.dashboardForm {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboardForm input,
+.dashboardForm select {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.dashboardForm button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.dashboardForm button:hover {
+  background-color: #0056b3;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filters input,
+.filters select {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Task list grid */
+.tasksContainer {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 220 → 280 */
+  gap: 18px; /* thoda spacing bhi increase */
+}
+
+/* Task card */
+.taskCard {
+  background: #ffffff;
+  padding: 16px; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+/* Title */
+.taskCard h3 {
+  margin: 6px 0;
+  font-size: 18px;
+  color: #007bff;
+}
+
+/* Text */
+.taskCard p {
+  margin: 2px 0;
+  color: #555;
+}
+
+/* Checkbox */
+.taskCard input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+/* Buttons */
+.taskCard button {
+  margin-top: 6px;
+  margin-right: 5px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Edit */
+.taskCard button:first-of-type {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Delete */
+.taskCard button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #999;
+  opacity: 0.7;
+}
+
+.sectionTitle {
+  margin: 20px 0 10px;
+  color: #333;
+  text-align: center; 
+}

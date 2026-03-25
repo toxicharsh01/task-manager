@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./ls.module.css";
 import API from "../utils/axios";
 import { useForm } from "react-hook-form";
@@ -10,21 +10,24 @@ function Signup() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
+  // redirect if already logged in
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      return navigate("/dashboard"); 
+    }
+  }, []);
+
+  // handle signup form submission
   const onSubmit = async (data) => {
     const { username, email, password } = data;
 
     try {
-      const { data } = await API.post("/users/signup", {
-        username,
-        email,
-        password,
-      });
+      const { data } = await API.post("/users/signup", { username, email, password });
 
-      if (data?.message) {
-        handleSuccess(data.message);
-      }
+      if (data?.message) handleSuccess(data.message);
 
-      navigate("/login");
+      // redirect to login after success
+      setTimeout(() => navigate("/login"), 2500);
     } catch (error) {
       const msg = error.response?.data?.message;
       handleError(msg || "Server error, please try again");

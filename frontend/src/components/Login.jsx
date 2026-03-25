@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styles from "./ls.module.css";
 import API from "../utils/axios";
 import { handleError, handleSuccess } from "../utils/Toastify";
@@ -12,29 +12,37 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
+  // redirect if already logged in or show logout message
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      return navigate("/dashboard"); 
+    }
+
+    const isLoggedOut = localStorage.getItem("logout");
+    if (isLoggedOut) {
+      handleSuccess("Logout successful");
+      setTimeout(() => localStorage.removeItem("logout"), 0);
+    }
+  }, []);
+
+  // handle login form submission
   const onSubmit = async (data) => {
     const { username, password } = data;
 
     try {
-      const { data } = await API.post("/users/login", {
-        username,
-        password,
-      });
-
+      const { data } = await API.post("/users/login", { username, password });
+      
       localStorage.setItem("username", data.username);
       login(data.jwtToken);
 
-      handleSuccess("Login successful");
-      navigate("/dashboard");
+      navigate("/dashboard", { state: { isLoggedIn: true }, replace: true });
     } catch (error) {
       const msg = error.response?.data?.message;
 
       if (msg) {
         if (msg.toLowerCase().includes("user does not exist")) {
           handleError("User does not exist. Redirecting to signup...");
-          setTimeout(() => {
-            navigate("/signup");
-          }, 3000);
+          setTimeout(() => navigate("/signup"), 3000);
         } else {
           handleError(msg);
         }
@@ -46,7 +54,7 @@ function Login() {
 
   return (
     <div className={styles.container}>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
 
       <div className={styles.box}>
         <h2 className={styles.heading}>Login</h2>
