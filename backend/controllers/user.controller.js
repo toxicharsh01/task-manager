@@ -4,9 +4,10 @@ const jwt = require("jsonwebtoken");
 
 // Signup controller
 const signupController = async (req, res) => {
+  console.log("getting req.")
   try {
     const { username, email, password } = req.body;
-
+    console.log(req.body);
     // Validate input
     if (!username || !email || !password) {
       return res
@@ -44,7 +45,7 @@ const signupController = async (req, res) => {
       .status(201)
       .json({ success: true, message: "signup successfull", user: newUser });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 

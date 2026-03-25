@@ -5,8 +5,10 @@ const createTask = async (req, res) => {
   const { title, description, priority, dueDate } = req.body; // added new fields
   const user = req.user;
 
+  console.log(user);
+
   // Validate required fields
-  if (!title || !description) {
+  if (!title || !description || !priority || !dueDate) {
     return res
       .status(400)
       .json({ success: false, message: "All fields are required" });
@@ -130,8 +132,9 @@ const updateTask = async (req, res) => {
 // Delete task
 const deleteTask = async (req, res) => {
   try {
+    console.log(req.params.id);
     const task = await Task.findByIdAndDelete(req.params.id);
-
+    
     if (!task) {
       return res.status(404).json({ success: false, message: "Task not found" });
     }

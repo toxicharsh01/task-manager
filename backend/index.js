@@ -3,6 +3,7 @@ const app = express();
 const userRoutes = require("./routes/user.routes");
 const taskRoutes = require("./routes/task.routes");
 const connectDB = require("./utils/db"); // DB connection
+const cors = require("cors");
 require("dotenv").config();
 
 // Connect to MongoDB
@@ -11,7 +12,7 @@ connectDB();
 // Middlewares to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors());
 // User routes
 app.use("/api/v1/users", userRoutes);
 
