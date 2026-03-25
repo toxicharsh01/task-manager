@@ -2,7 +2,7 @@
 
 A simple **Task Manager App** built using the MERN stack.  
 The backend is fully functional with basic task CRUD operations and authentication.  
-The **frontend using React** has its first components implemented: Login & Signup forms.
+The **frontend using React** now has **Login, Signup, and Dashboard components** implemented.  
 
 ---
 
@@ -20,16 +20,19 @@ The **frontend using React** has its first components implemented: Login & Signu
 
 ### Completed
 * **React-based Login & Signup** forms  
+* **Dashboard** to view tasks with:
+  - Add/Edit/Delete functionality  
+  - Task status updates (completed/pending)  
+  - Task filters (search, priority, status)  
 * **Context API** for authentication  
 * Clean UI using **CSS Modules**  
 * **Axios integration** for API requests  
-* Toast notifications for success/error messages
+* Toast notifications for success/error messages  
 
 ### In Progress
-* **Dashboard** to view all tasks  
-* **Task creation, update, and deletion**  
-* **Search and filter tasks**  
-* **Task priority and due dates**  
+* Additional **frontend styling enhancements**  
+* **Responsive design improvements**  
+* Further **user experience optimizations**  
 
 ---
 
@@ -48,8 +51,8 @@ The **frontend using React** has its first components implemented: Login & Signu
 
 ## Project Status
 
-✅ Backend functional with core features  
-✅ Frontend Login & Signup implemented  
-🚧 Remaining frontend features under development  
+✅ Backend fully functional  
+✅ Frontend Login, Signup, and Dashboard implemented  
+🚧 Remaining frontend enhancements under development  
 
-More improvements and enhancements will be added soon.
+More improvements and features will be added soon, making the app **closer to production-ready**.
